@@ -6,6 +6,8 @@ function PopupWithForm({
   onClose,
   onSubmit,
   isLoading,
+  submitButtonValue,
+  submitButtonWaitingValue,
 }) {
   return (
     <div className={`popup popup_type_${name} ${isOpen && "popup_is-opened"}`}>
@@ -18,7 +20,7 @@ function PopupWithForm({
         <h2 className="popup__title">{title}</h2>
         {children}
         <button type="submit" className="popup__save-button" value="Сохранить">
-          {isLoading ? "Сохранение..." : "Сохранить"}
+          {isLoading ? submitButtonWaitingValue : submitButtonValue}
         </button>
         <button
           onClick={onClose}

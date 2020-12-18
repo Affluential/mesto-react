@@ -22,11 +22,13 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
       name="avatar"
       title="Обновить аватар"
       isLoading={isLoading}
+      submitButtonValue="Сохранить"
+      submitButtonWaitingValue="Сохранение..."
     >
       <fieldset className="popup__input">
         <input
           type="url"
-          name="statusChange"
+          name="avatarUrl"
           required
           placeholder="Ссылка на аватар"
           className="popup__input-item popup__input-item_change_image"

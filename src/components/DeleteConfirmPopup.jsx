@@ -13,6 +13,8 @@ function DeleteConfirmPopup({ isOpen, onClose, onConfurm, isLoading }) {
       name="delete-confirm"
       title="Вы Уверены?"
       isLoading={isLoading}
+      submitButtonValue="Да"
+      submitButtonWaitingValue="Удаление..."
     />
   );
 }

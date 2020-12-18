@@ -2,27 +2,30 @@ import { useState, useContext, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm.jsx";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
   const currentUser = useContext(CurrentUserContext);
-
-  function handleChange(e) {
-    e.target.name === "nameChange"
-      ? setName(e.target.value)
-      : setDescription(e.target.value);
+  const [inputValue, setInputValue] = useState({
+    name: "",
+    status: "",
+  });
+  function handleImputChange(e) {
+    const targetValue = e.target.value;
+    const name = e.target.name;
+    setInputValue({ ...inputValue, [name]: targetValue });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateUser({
-      name: name,
-      about: description,
+      name: inputValue.name,
+      about: inputValue.status,
     });
   }
 
   useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
+    setInputValue({
+      name: currentUser.name,
+      status: currentUser.about,
+    });
   }, [currentUser, isOpen]);
 
   return (
@@ -33,14 +36,16 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
       title="Редактировать профиль"
       onSubmit={handleSubmit}
       isLoading={isLoading}
+      submitButtonValue="Сохранить"
+      submitButtonWaitingValue="Сохранение..."
     >
       <fieldset className="popup__input">
         <input
           type="text"
-          name="nameChange"
-          value={name || ""}
+          name="name"
+          value={inputValue.name || ""}
           required
-          onChange={handleChange}
+          onChange={handleImputChange}
           placeholder="Ваше имя"
           className="popup__input-item popup__input-item_change_name"
           id="sign-in-name"
@@ -51,10 +56,10 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
         <span className="popup__input-error" id="sign-in-name-error"></span>
         <input
           type="text"
-          name="statusChange"
-          value={description || ""}
+          name="status"
+          value={inputValue.status || ""}
           required
-          onChange={handleChange}
+          onChange={handleImputChange}
           placeholder="Ваше занятие"
           className="popup__input-item popup__input-item_change_status"
           id="sign-in-status"

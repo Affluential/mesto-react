@@ -1,26 +1,27 @@
 import { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm.jsx";
 function AddPlacePopup({ isOpen, onClose, onAddCard, isLoading }) {
-  const [name, setName] = useState("");
-  const [link, setLink] = useState("");
+  const [inputValue, setInputValue] = useState({
+    placeName: "",
+    placeLink: "",
+  });
 
   function handleChange(e) {
-    e.target.name === "nameChange"
-      ? setName(e.target.value)
-      : setLink(e.target.value);
+    const targetValue = e.target.value;
+    const name = e.target.name;
+    setInputValue({ ...inputValue, [name]: targetValue });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     onAddCard({
-      name,
-      link,
+      name: inputValue.placeName,
+      link: inputValue.placeLink,
     });
   }
 
   useEffect(() => {
-    setName("");
-    setLink("");
+    setInputValue({ placeName: "", placeLink: "" });
   }, [isOpen]);
 
   return (
@@ -31,11 +32,13 @@ function AddPlacePopup({ isOpen, onClose, onAddCard, isLoading }) {
       title="Новое Место"
       onSubmit={handleSubmit}
       isLoading={isLoading}
+      submitButtonValue="Сохранить"
+      submitButtonWaitingValue="Сохранение..."
     >
       <fieldset className="popup__input">
         <input
           type="text"
-          name="nameChange"
+          name="placeName"
           required
           placeholder="Название"
           className="popup__input-item popup__input-item_change_value"
@@ -44,19 +47,19 @@ function AddPlacePopup({ isOpen, onClose, onAddCard, isLoading }) {
           minLength="2"
           maxLength="30"
           onChange={handleChange}
-          value={name}
+          value={inputValue.placeName}
         />
         <span className="popup__input-error" id="sign-in-title-error"></span>
         <input
           type="url"
-          name="statusChange"
+          name="placeLink"
           required
           placeholder="Ссылка на картинку"
           className="popup__input-item popup__input-item_change_image"
           id="sign-in-url"
           autoComplete="off"
           onChange={handleChange}
-          value={link}
+          value={inputValue.placeLink}
         />
         <span className="popup__input-error" id="sign-in-url-error"></span>
       </fieldset>
