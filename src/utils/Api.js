@@ -12,7 +12,7 @@ class Api {
       return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
-  getUserName() {
+  getUserInfo() {
     return this._obtainData("/users/me", { headers: this._headers });
   }
   getInitialCards() {
@@ -44,23 +44,17 @@ class Api {
       headers: this._headers,
     });
   }
-  like(cardId) {
-    return this._obtainData(`/cards/likes/${cardId}`, {
-      method: "PUT",
-      headers: this._headers,
-    });
-  }
-  dislike(cardId) {
-    return this._obtainData(`/cards/likes/${cardId}`, {
-      method: "DELETE",
-      headers: this._headers,
-    });
-  }
   changeAvatar(avatarUrl) {
     return this._obtainData(`/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({ avatar: avatarUrl }),
+      body: JSON.stringify(avatarUrl),
+    });
+  }
+  changeLikeCardStatus(cardId, isLiked) {
+    return this._obtainData(`/cards/likes/${cardId}`, {
+      method: `${isLiked ? "PUT" : "DELETE"}`,
+      headers: this._headers,
     });
   }
 }
