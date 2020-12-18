@@ -1,4 +1,3 @@
-import React from "react";
 function ImagePopup({ isImageOpen, name, link, onClose }) {
   return (
     <div

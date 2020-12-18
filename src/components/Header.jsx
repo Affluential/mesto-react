@@ -1,4 +1,3 @@
-import React from "react";
 import mestoLogo from "../images/logo.svg";
 
 function Header() {

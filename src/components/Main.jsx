@@ -1,5 +1,4 @@
 import { useContext } from "react";
-
 import Card from "./Card.jsx";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 function Main({
